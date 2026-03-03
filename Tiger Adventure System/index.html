@@ -10,20 +10,21 @@
     <style>
         body { margin: 0; overflow: hidden; background-color: #f4f6f9; }
         
-        /* ตกแต่งกล่องปุ่ม Google ให้ลอยอยู่ตรงกลางด้านบน */
+        /* ตกแต่งกล่องปุ่ม Google ให้ลอยอยู่ด้านบน */
         #google-btn-wrapper {
             position: absolute;
-            top: 20px;
+            top: 25px; /* ระยะห่างจากขอบบน */
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999; /* ให้อยู่เหนือ iframe */
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            background: #ffffff;
+            padding: 8px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            border: 1px solid #e0e0e0;
         }
         
         iframe {
@@ -38,23 +39,24 @@
 <body>
 
     <div id="google-btn-wrapper">
-        <span style="font-family: 'Sarabun', sans-serif; font-weight: bold; color: #333;">เข้าสู่ระบบด้วย: </span>
+        <span style="font-family: sans-serif; font-size: 14px; font-weight: bold; color: #555;">เข้าสู่ระบบด้วย: </span>
+        
         <div id="g_id_onload"
              data-client_id="697390183584-d6r3m59bm807l00cg11lqn7splkestl5.apps.googleusercontent.com"
              data-callback="handleGoogleLogin">
         </div>
-        <div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large"></div>
+        <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-size="medium"></div>
     </div>
 
     <iframe id="gasIframe" scrolling="no" src="https://script.google.com/macros/s/AKfycbzHcCX12Wz_k2O_ZE4bkocK1k1QXr3S6BGCq8ZhZYP5CQUnkRMxNaUt7Kyte5dszxjd/exec"></iframe>
 
     <script>
-        // 4. ฟังก์ชันรับ Token จาก Google แล้วยิงทะลุไปให้ iframe
+        // ฟังก์ชันรับ Token จาก Google แล้วยิงเข้าไปใน iframe
         function handleGoogleLogin(response) {
-            // ซ่อนปุ่ม Google ทิ้งไปเมื่อล็อกอินสำเร็จ
+            // ซ่อนปุ่ม Google ทิ้งไปเมื่อล็อกอินสำเร็จเพื่อไม่ให้เกะกะจอ
             document.getElementById('google-btn-wrapper').style.display = 'none';
             
-            // ส่งข้อความ (Token) ทะลุกระจกเข้าไปใน iframe
+            // ส่งข้อความ (Token) เข้าไปใน iframe
             const iframe = document.getElementById('gasIframe');
             iframe.contentWindow.postMessage({
                 type: 'GOOGLE_LOGIN_SUCCESS',
