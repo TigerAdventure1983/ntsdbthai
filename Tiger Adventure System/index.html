@@ -53,11 +53,14 @@
     <script>
         // ฟังก์ชันรับ Token จาก Google แล้วยิงเข้าไปใน iframe
         function handleGoogleLogin(response) {
-            // ซ่อนปุ่ม Google ทิ้งไปเมื่อล็อกอินสำเร็จเพื่อไม่ให้เกะกะจอ
+            console.log("1. ล็อกอิน Google สำเร็จ! ได้ Token มาแล้ว");
+            
+            // ซ่อนปุ่ม Google ทิ้งไป
             document.getElementById('google-btn-wrapper').style.display = 'none';
             
             // ส่งข้อความ (Token) เข้าไปใน iframe
             const iframe = document.getElementById('gasIframe');
+            console.log("2. กำลังยิง Token ทะลุเข้า iframe...");
             iframe.contentWindow.postMessage({
                 type: 'GOOGLE_LOGIN_SUCCESS',
                 token: response.credential
